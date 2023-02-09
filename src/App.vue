@@ -1,20 +1,25 @@
 <template>
-<img alt="Vue logo" src="./assets/logo.png">
-<HelloWorld msg="Europol Malware Analysis System" />
+  <router-link class="link" to="/">Login Page</router-link> 
+  <router-link class="link" to="/profile">Profile Page</router-link> <br/>
+<router-view/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    
   }
 }
 </script>
 
 <style>
+
+.link {
+  margin: 10px;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
