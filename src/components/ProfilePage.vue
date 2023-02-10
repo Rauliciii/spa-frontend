@@ -3,18 +3,17 @@
 <h2> Welcome, {{getCurrentUser()}}</h2>
 </template>
 
-  
 <script>
 export default {
   name: "ProfilePage",
   data() {
     return {
-      user : ""
+      user: ""
     }
   },
   methods: {
     getCurrentUser() {
-      const userName = this.$route.query.username;
+      const userName = this.$route.query.email;
       this.user = userName;
       return userName;
     }
@@ -22,7 +21,6 @@ export default {
 }
 </script>
 
-  
 <style scoped>
 h2 {
   color: orange
