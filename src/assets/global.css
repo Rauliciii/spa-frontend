@@ -1,0 +1,13 @@
+.custom-card {
+  width: 380px;
+  max-width: 100%;
+}
+
+.user-icon {
+  font-size: 100px;
+  color: rgb(197, 216, 232);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
