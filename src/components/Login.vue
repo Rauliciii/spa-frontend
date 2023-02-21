@@ -42,7 +42,7 @@ import {
   useUserStore
 } from "../store/user";
 import User from "@/models/user";
-import authService from "@/services/auth.service";
+// import authService from "@/services/auth.service";
 
 export default {
   name: "LoginComponent",
@@ -61,7 +61,6 @@ export default {
       errorMessage: ""
     };
   },
-  props: {},
   methods: {
     handleLogin() {
       console.log("Started Login");
@@ -71,11 +70,9 @@ export default {
       }
       this.loading = true;
 
-      authService.login(this.formData.username, this.formData.password).then((response) => {
+      this.userStore.signIn(this.formData).then(() => {
         //updateUser in PINIA
-        console.log("Success!!")
-        console.log(response.data);
-        this.userStore.setUser(response.data)
+        console.log("Login Successful!")
         this.$router.push("/profile");
 
       }).catch((err) => {
@@ -92,7 +89,7 @@ export default {
   },
   mounted() {
     //Bug workaround: use pinia store on mounted
-    console.log("MOUNT:" + this.userStore.currentUser)
+    console.log("MOUNT:" + this.userStore.loggedIn)
 
     //session-user
     // if (this.userStore.currentUser != null && this.currentUser.username != null) {

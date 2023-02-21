@@ -1,18 +1,35 @@
+import authService from "@/services/auth.service";
 import { defineStore } from "pinia";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    currentUser: null,
+    user: null,
     title : "Hello Title"
   }),
   getters: {
-    getUser() {
-      return this.currentUser;
-    }
+    loggedIn: (state) => state.user != null,
+    currentUser: (state) => state.user,
+    currentUserName: (state) =>  {
+      if (state.currentUser) {
+        return state.user.username;
+      } else {
+        return "";
+      }
+    },
   },
   actions: {
     setUser(user) {
-      this.currentUser = user;
+      this.user = user;
+    },
+
+    async signIn(userForm) {
+      const response = await authService.login(userForm.username, userForm.password);
+      this.user = response.data;
+      return response;
+    },
+
+    signOut() {
+      this.user = null;
     }
   },
 });

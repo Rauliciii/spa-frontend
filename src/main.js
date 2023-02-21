@@ -30,6 +30,9 @@ window.$ = $  ;
 const pinia = createPinia();
 
 const app = createApp(App);
+
+
+
 app.component('font-awesome-icon', FontAwesomeIcon).use(router);
 
 app.use(pinia);

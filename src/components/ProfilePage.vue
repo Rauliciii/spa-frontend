@@ -22,15 +22,14 @@ export default {
       userStore
     };
   },
-  data() {
-    return {
 
-    }
-  },
   methods: {
     getCurrentUser() {
-      console.log(this.userStore.currentUser.username);
-      return this.userStore.currentUser.username;
+      if (this.userStore.currentUser != null && this.userStore.currentUser.username!= null) {
+        return this.userStore.currentUser.username;
+      } else {
+        return "not logged in";
+      }
     }
   }
 }

@@ -8,6 +8,7 @@ import GridPage from '../components/GridPage.vue';
 import NotFound from '../components/error/NotFound.vue';
 import NotAuthorized from '../components/error/NotAuthorized.vue';
 import LoginComponent from '../components/Login.vue';
+// import { useUserStore } from '@/store/user';
 
 const routes= [
   {
@@ -62,5 +63,22 @@ const router=createRouter({
   routes
 }
 )
+
+// define UserStore before any Page
+
+// router.beforeEach((to, from, next) => {
+//   // we wanted to use the store here
+
+//   if (useUserStore.loggedIn) next()
+//   else next('/login')
+// })
+
+router.beforeEach(() => {
+  // ✅ This will work because the router starts its navigation after
+  // the router is installed and pinia will be installed too
+  // useUserStore()
+
+  // if (to.meta.requiresAuth && !store.loggedIn) return '/login'
+})
 
 export default router;
