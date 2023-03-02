@@ -50,12 +50,12 @@
 <script>
 import {
   useUserStore
-} from "../store/user";
+} from "../../store/user.store";
 import User from "@/models/user";
 import authService from "@/services/auth.service";
 
 export default {
-  name: "RegisterPage",
+  name: "RegisterView",
   setup() {
     const userStore = useUserStore();
     return {

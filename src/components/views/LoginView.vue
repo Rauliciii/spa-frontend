@@ -40,19 +40,17 @@
 <script>
 import {
   useUserStore
-} from "../store/user";
+} from "../../store/user.store";
 import User from "@/models/user";
-// import authService from "@/services/auth.service";
 
 export default {
-  name: "LoginComponent",
+  name: "LoginView",
   setup() {
     const userStore = useUserStore();
     return {
       userStore
     };
   },
-  created() {},
   data() {
     return {
       formData: new User(),
@@ -71,7 +69,6 @@ export default {
       this.loading = true;
 
       this.userStore.signIn(this.formData).then(() => {
-        //updateUser in PINIA
         console.log("Login Successful!")
         this.$router.push("/profile");
 
@@ -86,15 +83,6 @@ export default {
 
     }
 
-  },
-  mounted() {
-    //Bug workaround: use pinia store on mounted
-    console.log("MOUNT:" + this.userStore.loggedIn)
-
-    //session-user
-    // if (this.userStore.currentUser != null && this.currentUser.username != null) {
-    //   this.$router.push("profile");
-    // }
   }
 };
 </script>

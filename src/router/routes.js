@@ -1,45 +1,47 @@
 import {createWebHistory, createRouter} from 'vue-router'
 
-import HelloWorldVue from '@/components/HelloWorld.vue';
-// import LoginPage from '../components/LoginPage.vue';
-import RegisterPage from '../components/Register.vue'
-import ProfilePage from '../components/ProfilePage.vue';
-import GridPage from '../components/GridPage.vue';
+import HomeView from '@/components/views/HomeView.vue'
+import RegisterView from '../components/views/RegisterView.vue'
+import ProfileView from '../components/views/ProfileView.vue';
+import SubmissionsView from '../components/views/SubmissionsView.vue';
 import NotFound from '../components/error/NotFound.vue';
 import NotAuthorized from '../components/error/NotAuthorized.vue';
-import LoginComponent from '../components/Login.vue';
-// import { useUserStore } from '@/store/user';
+import LoginView from '../components/views/LoginView.vue';
+import Role from '@/models/role';
+import { useUserStore } from '@/store/user.store';
 
 const routes= [
   {
     name : "default",
     path : "/",
-    component : HelloWorldVue
+    component : HomeView
   },
   {
     name : "home",
     path : "/home",
-    component : HelloWorldVue
+    component : HomeView
   },
   {
     name:'login',
     path: '/login',
-    component: LoginComponent
+    component: LoginView
   },
   {
     name:'register',
     path: '/register',
-    component: RegisterPage
+    component: RegisterView
   },
   {
     name:'profile',
     path: '/profile',
-    component: ProfilePage
+    component: ProfileView,
+    meta: { roles: [Role.ADMIN, Role.USER] }
   },
   {
-    name:'admin',
-    path: '/admin',
-    component: GridPage
+    name:'submissions',
+    path: '/submissions',
+    component: SubmissionsView,
+    meta: { roles: [Role.ADMIN, Role.USER] }
   },  
   {
     name:'404',
@@ -64,21 +66,21 @@ const router=createRouter({
 }
 )
 
-// define UserStore before any Page
+router.beforeEach((to, from, next) => {
+  const {roles} = to.meta;
+  const currentUser = useUserStore().currentUser;
 
-// router.beforeEach((to, from, next) => {
-//   // we wanted to use the store here
+  if (roles?.length) {
+    if (!currentUser) {
+      return next({path : "/login"});
+    }
 
-//   if (useUserStore.loggedIn) next()
-//   else next('/login')
-// })
-
-router.beforeEach(() => {
-  // ✅ This will work because the router starts its navigation after
-  // the router is installed and pinia will be installed too
-  // useUserStore()
-
-  // if (to.meta.requiresAuth && !store.loggedIn) return '/login'
+    if (!roles.includes(currentUser.role)) {
+      return next({path: "/401"});
+    }
+  }
+  next();
 })
+
 
 export default router;

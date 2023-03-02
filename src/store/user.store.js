@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null,
-    title : "Hello Title"
+    title : "Hello Title",
   }),
   getters: {
     loggedIn: (state) => state.user != null,
@@ -15,21 +15,26 @@ export const useUserStore = defineStore("user", {
       } else {
         return "";
       }
-    },
+    }
   },
   actions: {
     setUser(user) {
       this.user = user;
     },
 
+
     async signIn(userForm) {
       const response = await authService.login(userForm.username, userForm.password);
+      console.log(response.data);
       this.user = response.data;
       return response;
     },
 
-    signOut() {
+    async signOut() {
+      const response = await authService.logout();
       this.user = null;
+      return response;
     }
+
   },
 });

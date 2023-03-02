@@ -1,17 +1,17 @@
 <template>
 <nav class="navbar navbar-expand navbar-dark bg-dark">
-  <a href="https://vuejs.org" class="navbar-brand ms-1">
-    <img src="./assets/logo.png" height="40" /> EUROPOL |
-  </a>
+  <router-link class="nav-link" to="/" active-class="active">
+    <img src="./assets/europol-logo-white.png" height="15" class="margin-horizontal"/>  
+  </router-link>
 
   <div class="navbar-nav me-auto">
     <li class="nav-item">
-      <router-link class="nav-link" to="/admin" active-class="active">
-        Admin
+      <router-link class="nav-link" to="/submissions" active-class="active"  v-if="currentUser">
+        Submissions
       </router-link>
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" to="/home" active-class="active">
+      <router-link class="nav-link" to="/home" active-class="active"  v-if="!currentUser">
         Home
       </router-link>
     </li>
@@ -24,7 +24,7 @@
       </router-link>
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" to="/login" active-class="active">
+      <router-link class="nav-link margin-horizontal" to="/login" active-class="active">
         Sign In
       </router-link>
     </li>
@@ -59,7 +59,7 @@ import {
 import Role from './models/role';
 import {
   useUserStore
-} from './store/user'
+} from './store/user.store'
 
 export default {
   name: 'App',
@@ -93,7 +93,9 @@ export default {
 </script>
 
 <style>
-.link {
-  margin: 10px;
+.margin-horizontal {
+  margin-left: 12px;
+  margin-right: 12px;
 }
+
 </style>
